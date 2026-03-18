@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Культура Паса</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: white;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .header h1 {
+            font-size: 28px;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        .positions {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        .position-btn, .phase-btn {
+            background: rgba(255,255,255,0.2);
+            border: 2px solid rgba(255,255,255,0.3);
+            border-radius: 16px;
+            padding: 20px;
+            font-size: 16px;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+        .position-btn:hover, .phase-btn:hover {
+            background: rgba(255,255,255,0.3);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+        }
+        .hidden { display: none !important; }
+        .back-btn {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: rgba(0,0,0,0.5);
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            color: white;
+            font-size: 20px;
+            cursor: pointer;
+        }
+        .videos {
+            text-align: center;
+        }
+        .video-link {
+            display: block;
+            background: rgba(255,255,255,0.1);
+            margin: 10px 0;
+            padding: 15px;
+            border-radius: 12px;
+            text-decoration: none;
+            color: white;
+            transition: all 0.3s;
+        }
+        .video-link:hover {
+            background: rgba(255,255,255,0.2);
+            transform: scale(1.02);
+        }
+    </style>
+</head>
+<body>
+    <button class="back-btn hidden" onclick="goBack()">←</button>
+    
+    <div class="header">
+        <h1>⚽ Культура Паса</h1>
+        <p>Выбери свою позицию</p>
+    </div>
+
+    <div id="positions-screen" class="positions">
+        <button class="position-btn" onclick="selectPosition('🛡️ Центральный защитник')">
+            🛡️ Центрбек
+        </button>
+        <button class="position-btn" onclick="selectPosition('⬇️ Крайний защитник')">
+            ⬇️ Фулбек
+        </button>
+        <button class="position-btn" onclick="selectPosition('⚙️ Опорный полузащитник')">
+            ⚙️ Опорник
+        </button>
+        <button class="position-btn" onclick="selectPosition('🎯 Атакующий полузащитник')">
+            🎯 Десятка
+        </button>
+        <button class="position-btn" onclick="selectPosition('➡️ Фланговый полузащитник')">
+            ➡️ Вингер
+        </button>
+        <button class="position-btn" onclick="selectPosition('👑 Центральный нападающий')">
+            👑 Столб
+        </button>
+        <button class="position-btn" onclick="selectPosition('🎪 Крайний нападающий')">
+            🎪 LW/RW
+        </button>
+    </div>
+
+    <div id="phases-screen" class="positions hidden">
+        <div class="phase-btn" onclick="selectPhase('⚔️ Атака')" style="grid-column: 1/-1; justify-self: center;">
+            ⚔️ АТАКА
+        </div>
+        <div class="phase-btn" onclick="selectPhase('🛡️ Оборона')" style="grid-column: 1/-1; justify-self: center;">
+            🛡️ ОБОРОНА
+        </div>
+    </div>
+
+    <div id="videos-screen" class="videos hidden"></div>
+
+    <script>
+        // Инициализация Telegram WebApp
+        Telegram.WebApp.ready();
+        Telegram.WebApp.expand();
+        Telegram.WebApp.MainButton.setText("Отправить в чат").show().onClick(sendData);
+
+        let selectedPosition = '';
+
+        function selectPosition(position) {
+            selectedPosition = position;
+            document.getElementById('positions-screen').classList.add('hidden');
+            document.querySelector('.back-btn').classList.remove('hidden');
+            showPhases();
+        }
+
+        function showPhases() {
+            document.getElementById('phases-screen').classList.remove('hidden');
+            document.getElementById('phases-screen').scrollIntoView();
+        }
+
+        function selectPhase(phase) {
+            document.getElementById('phases-screen').classList.add('hidden');
+            document.getElementById('videos-screen').classList.remove('hidden');
+            Telegram.WebApp.MainButton.setText(`Получить видео: ${selectedPosition} — ${phase}`);
+            
+            // Покажем заглушку (реальные видео придут из бота)
+            document.getElementById('videos-screen').innerHTML = `
+                <h2>📱 ${selectedPosition}</h2>
+                <h3>${phase}</h3>
+                <p>Видео отправляются в чат 👇</p>
+            `;
+            document.getElementById('videos-screen').scrollIntoView();
+        }
+
+        function goBack() {
+            document.querySelectorAll('.hidden:not(#positions-screen)').forEach(screen => {
+                screen.classList.add('hidden');
+            });
+            document.getElementById('positions-screen').classList.remove('hidden');
+            document.querySelector('.back-btn').classList.add('hidden');
+            Telegram.WebApp.MainButton.hide();
+        }
+
+        function sendData() {
+            const data = { position: selectedPosition, phase: '⚔️ Атака' }; // Можно динамически
+            Telegram.WebApp.sendData(JSON.stringify(data));
+            Telegram.WebApp.close();
+        }
+    </script>
+</body>
+</html>
