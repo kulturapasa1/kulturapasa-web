@@ -6,12 +6,7 @@
     <title>Культура Паса</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
-        * { 
-            margin: 0; 
-            padding: 0; 
-            box-sizing: border-box; 
-        }
-        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             background: #000000;
@@ -20,181 +15,73 @@
             padding: 20px;
             overflow-x: hidden;
         }
-
-        .logo {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-
+        .logo { text-align: center; margin-bottom: 20px; }
         .logo img {
-            width: 120px;
-            height: 120px;
-            border-radius: 20px;
-            border: 4px solid #00ff88;
-            box-shadow: 0 0 30px rgba(0, 255, 136, 0.5);
-            animation: pulse 2s infinite;
-            object-fit: cover;
+            width: 120px; height: 120px; border-radius: 20px;
+            border: 4px solid #00ff88; box-shadow: 0 0 30px rgba(0,255,136,0.5);
+            animation: pulse 2s infinite; object-fit: cover;
         }
-
         @keyframes pulse {
-            0% { box-shadow: 0 0 30px rgba(0, 255, 136, 0.5); }
-            50% { box-shadow: 0 0 50px rgba(0, 255, 136, 0.8); }
-            100% { box-shadow: 0 0 30px rgba(0, 255, 136, 0.5); }
+            0%, 100% { box-shadow: 0 0 30px rgba(0,255,136,0.5); }
+            50% { box-shadow: 0 0 50px rgba(0,255,136,0.8); }
         }
-
-        .title {
-            text-align: center;
-            margin-bottom: 40px;
-        }
-
         .title h1 {
-            font-size: 36px;
-            font-weight: 800;
-            color: white;
-            text-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
-            margin-bottom: 10px;
+            font-size: 36px; font-weight: 800; color: white;
+            text-shadow: 0 0 20px rgba(255,255,255,0.5); margin-bottom: 10px;
             letter-spacing: 2px;
         }
-
-        .subtitle {
-            font-size: 18px;
-            color: #cccccc;
-            font-weight: 300;
-        }
-
+        .subtitle { font-size: 18px; color: #cccccc; font-weight: 300; }
         .positions {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-            gap: 20px;
-            max-width: 800px;
-            margin: 0 auto;
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 20px; max-width: 800px; margin: 0 auto;
         }
-
         .position-btn {
             background: linear-gradient(145deg, #1a1a1a, #0d0d0d);
-            border: 2px solid #333;
-            border-radius: 20px;
-            padding: 25px 15px;
-            font-size: 18px;
-            font-weight: 600;
-            color: white;
-            cursor: pointer;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            position: relative;
-            overflow: hidden;
-            text-align: center;
+            border: 2px solid #333; border-radius: 20px;
+            padding: 25px 15px; font-size: 18px; font-weight: 600;
+            color: white; cursor: pointer; transition: all 0.4s ease;
+            text-align: center; position: relative; overflow: hidden;
         }
-
-        .position-btn::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(0, 255, 136, 0.2), transparent);
-            transition: left 0.5s;
-        }
-
-        .position-btn:hover::before {
-            left: 100%;
-        }
-
         .position-btn:hover {
-            border-color: #00ff88;
-            box-shadow: 0 15px 40px rgba(0, 255, 136, 0.3);
+            border-color: #00ff88; box-shadow: 0 15px 40px rgba(0,255,136,0.3);
             transform: translateY(-8px) scale(1.05);
-            background: linear-gradient(145deg, #222222, #111111);
         }
-
-        .position-btn:active {
-            transform: translateY(-4px) scale(1.02);
-        }
-
-        .position-icon {
-            display: block;
-            font-size: 32px;
-            margin-bottom: 8px;
-        }
-
+        .position-icon { display: block; font-size: 32px; margin-bottom: 8px; }
         .back-btn {
-            position: fixed;
-            top: 20px;
-            left: 20px;
-            background: rgba(0, 0, 0, 0.7);
-            border: 2px solid #00ff88;
-            border-radius: 50%;
-            width: 55px;
-            height: 55px;
-            color: #00ff88;
-            font-size: 20px;
-            font-weight: bold;
-            cursor: pointer;
-            backdrop-filter: blur(10px);
-            transition: all 0.3s ease;
-            z-index: 1000;
+            position: fixed; top: 20px; left: 20px;
+            background: rgba(0,0,0,0.7); border: 2px solid #00ff88;
+            border-radius: 50%; width: 55px; height: 55px;
+            color: #00ff88; font-size: 20px; font-weight: bold;
+            cursor: pointer; z-index: 1000;
         }
-
-        .back-btn:hover {
-            background: rgba(0, 255, 136, 0.2);
-            box-shadow: 0 0 20px rgba(0, 255, 136, 0.5);
-            transform: scale(1.1);
-        }
-
-        .hidden { 
-            display: none !important; 
-        }
-
+        .back-btn:hover { background: rgba(0,255,136,0.2); transform: scale(1.1); }
+        .hidden { display: none !important; }
         .phases-screen {
-            text-align: center;
-            max-width: 500px;
-            margin: 0 auto;
+            text-align: center; max-width: 500px; margin: 0 auto;
         }
-
         .phase-btn {
             background: linear-gradient(145deg, #1a1a1a, #0d0d0d);
-            border: 2px solid #333;
-            border-radius: 20px;
-            padding: 30px;
-            font-size: 24px;
-            font-weight: 700;
-            color: white;
-            cursor: pointer;
-            margin: 20px 0;
-            transition: all 0.4s ease;
-            width: 100%;
-            max-width: 400px;
-            margin-left: auto;
-            margin-right: auto;
+            border: 2px solid #333; border-radius: 20px; padding: 30px;
+            font-size: 24px; font-weight: 700; color: white;
+            cursor: pointer; margin: 20px 0; width: 100%; max-width: 400px;
         }
-
         .phase-btn:hover {
-            border-color: #00ff88;
-            box-shadow: 0 20px 50px rgba(0, 255, 136, 0.4);
+            border-color: #00ff88; box-shadow: 0 20px 50px rgba(0,255,136,0.4);
             transform: translateY(-10px);
         }
-
         @media (max-width: 600px) {
-            .title h1 {
-                font-size: 28px;
-            }
-            .positions {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 15px;
-            }
-            .position-btn {
-                padding: 20px 10px;
-                font-size: 16px;
-            }
+            .title h1 { font-size: 28px; }
+            .positions { grid-template-columns: repeat(2, 1fr); gap: 15px; }
         }
     </style>
 </head>
 <body>
     <button class="back-btn hidden" onclick="goBack()">←</button>
     
-    <!-- ЛОГОТИП -->
-    <div class="logo" id="logo-screen">
-        <img src="./logokp.jpeg" alt="Культура Паса" onerror="this.src='https://via.placeholder.com/120/00ff88/000000?text=⚽'">
+    <!-- ЛОГО + ПОЗИЦИИ (всегда видно) -->
+    <div class="logo">
+        <img src="./logokp.jpeg" alt="Культура Паса" 
+             onerror="this.src='https://via.placeholder.com/120/00ff88/000000?text=⚽'">
         <div class="title">
             <h1>КУЛЬТУРА ПАСА</h1>
             <p class="subtitle">Выбери свою позицию на поле</p>
@@ -202,34 +89,27 @@
     </div>
 
     <!-- ПОЗИЦИИ -->
-    <div id="positions-screen" class="positions hidden">
+    <div class="positions" id="positions-screen">
         <button class="position-btn" onclick="selectPosition('🛡️ Центральный защитник')">
-            <span class="position-icon">🛡️</span>
-            Центрбек
+            <span class="position-icon">🛡️</span> Центрбек
         </button>
         <button class="position-btn" onclick="selectPosition('⬇️ Крайний защитник')">
-            <span class="position-icon">⬇️</span>
-            Фулбек
+            <span class="position-icon">⬇️</span> Фулбек
         </button>
         <button class="position-btn" onclick="selectPosition('⚙️ Опорный полузащитник')">
-            <span class="position-icon">⚙️</span>
-            Опорник
+            <span class="position-icon">⚙️</span> Опорник
         </button>
         <button class="position-btn" onclick="selectPosition('🎯 Атакующий полузащитник')">
-            <span class="position-icon">🎯</span>
-            Десятка
+            <span class="position-icon">🎯</span> Десятка
         </button>
         <button class="position-btn" onclick="selectPosition('➡️ Фланговый полузащитник')">
-            <span class="position-icon">➡️</span>
-            Вингер
+            <span class="position-icon">➡️</span> Вингер
         </button>
         <button class="position-btn" onclick="selectPosition('👑 Центральный нападающий')">
-            <span class="position-icon">👑</span>
-            Столб
+            <span class="position-icon">👑</span> Столб
         </button>
         <button class="position-btn" onclick="selectPosition('🎪 Крайний нападающий')">
-            <span class="position-icon">🎪</span>
-            LW/RW
+            <span class="position-icon">🎪</span> LW/RW
         </button>
     </div>
 
@@ -237,68 +117,70 @@
     <div id="phases-screen" class="phases-screen hidden"></div>
 
     <script>
-        // Telegram WebApp
         Telegram.WebApp.ready();
         Telegram.WebApp.expand();
-        Telegram.WebApp.MainButton.setText("🎥 Получить видео").show().onClick(sendData);
-
+        
         let selectedPosition = '';
+        let selectedPhase = '';
+
+        // СПРАВА кнопка показывается ТОЛЬКО после выбора позиции
+        Telegram.WebApp.MainButton.setParams({ is_visible: false });
 
         function selectPosition(position) {
             selectedPosition = position;
-            document.getElementById('logo-screen').classList.add('hidden');
-            document.getElementById('positions-screen').classList.remove('hidden');
-            document.querySelector('.back-btn').classList.remove('hidden');
-            document.getElementById('positions-screen').scrollIntoView({ behavior: 'smooth' });
+            Telegram.WebApp.MainButton.setText('Выбрать фазу').show();
+            Telegram.WebApp.HapticFeedback.impactOccurred('light');
+            
+            // Прокрутка к верху
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
         function showPhases() {
-            document.getElementById('positions-screen').classList.add('hidden');
+            document.getElementById('positions-screen').style.display = 'none';
+            document.querySelector('.back-btn').classList.remove('hidden');
+            
             document.getElementById('phases-screen').classList.remove('hidden');
             document.getElementById('phases-screen').innerHTML = `
                 <div style="margin-bottom: 30px;">
                     <h2 style="font-size: 28px; margin-bottom: 20px; color: #00ff88;">${selectedPosition}</h2>
                     <p style="color: #cccccc; font-size: 16px;">Выбери фазу игры</p>
                 </div>
-                <div class="phase-btn" onclick="selectPhase('⚔️ Атака')" style="background: linear-gradient(145deg, #ff4444, #cc0000); border-color: #ff6666;">
+                <div class="phase-btn" onclick="selectPhase('⚔️ Атака')" 
+                     style="background: linear-gradient(145deg, #ff4444, #cc0000); border-color: #ff6666;">
                     ⚔️ АТАКА
                 </div>
-                <div class="phase-btn" onclick="selectPhase('🛡️ Оборона')" style="background: linear-gradient(145deg, #4477ff, #0055cc); border-color: #6699ff;">
+                <div class="phase-btn" onclick="selectPhase('🛡️ Оборона')" 
+                     style="background: linear-gradient(145deg, #4477ff, #0055cc); border-color: #6699ff;">
                     🛡️ ОБОРОНА
                 </div>
             `;
             document.getElementById('phases-screen').scrollIntoView({ behavior: 'smooth' });
-            Telegram.WebApp.MainButton.setText(`Получить видео: ${selectedPosition}`);
+            Telegram.WebApp.MainButton.setText('Получить видео');
         }
 
         function selectPhase(phase) {
-            Telegram.WebApp.MainButton.setText(`📹 Видео: ${selectedPosition} — ${phase}`);
+            selectedPhase = phase;
+            Telegram.WebApp.MainButton.setText(`📹 ${selectedPosition} — ${phase}`);
             Telegram.WebApp.HapticFeedback.impactOccurred('medium');
-            document.getElementById('phases-screen').classList.add('hidden');
         }
+
+        Telegram.WebApp.MainButton.onClick(() => {
+            if (selectedPosition && selectedPhase) {
+                const data = { position: selectedPosition, phase: selectedPhase };
+                Telegram.WebApp.sendData(JSON.stringify(data));
+                Telegram.WebApp.close();
+            } else if (selectedPosition) {
+                showPhases(); // Переход к фазам
+            }
+        });
 
         function goBack() {
-            document.querySelectorAll('.hidden:not(#logo-screen)').forEach(el => el.classList.add('hidden'));
-            document.getElementById('logo-screen').classList.remove('hidden');
+            document.getElementById('positions-screen').style.display = 'grid';
+            document.getElementById('phases-screen').classList.add('hidden');
             document.querySelector('.back-btn').classList.add('hidden');
-            Telegram.WebApp.MainButton.hide();
-            Telegram.WebApp.HapticFeedback.selectionChanged();
+            Telegram.WebApp.MainButton.setParams({ is_visible: false });
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
-
-        function sendData() {
-            const data = { 
-                position: selectedPosition, 
-                phase: document.querySelector('.phase-btn[onclick*="Атака"]') ? '⚔️ Атака' : '🛡️ Оборона'
-            };
-            Telegram.WebApp.sendData(JSON.stringify(data));
-            Telegram.WebApp.HapticFeedback.notificationOccurred('success');
-            Telegram.WebApp.close();
-        }
-
-        // Показать первую кнопку
-        setTimeout(() => {
-            Telegram.WebApp.MainButton.setText("Выбери позицию").show();
-        }, 500);
     </script>
 </body>
 </html>
